@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: netinfo-loadbalancer-service
+spec:
+  type: LoadBalancer
+  selector:
+    component: netinfo-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+      nodePort: 30002
+  #minikube ip
+  externalIPs:
+    - 192.168.64.9

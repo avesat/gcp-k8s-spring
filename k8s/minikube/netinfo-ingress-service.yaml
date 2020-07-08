@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: netinfo-ingress-service
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: netinfo-clusterip-service
+              servicePort: 8086
+          - path: /host/all
+            backend:
+              serviceName: netinfo-clusterip-service
+              servicePort: 8086

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netinfo-deployment
+spec:
+  selector:
+    matchLabels:
+      component: netinfo-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        component: netinfo-app
+    spec:
+      containers:
+        - name: netinfo-app
+          image: eu.gcr.io/kube-proj-272213/netinfo
+          ports:
+            - containerPort: 8086
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: db_host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: db_port
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: db_name
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: db_root_password

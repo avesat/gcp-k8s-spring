@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mysql-srv:
+    image: mysql
+    container_name: mysql-srv
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=netcol-db
+    ports:
+      - "3307:3306"
+  netinfo:
+    build: .
+    container_name: netinfo
+    depends_on:
+      - mysql-srv
+    ports:
+      - "8086:8086"
+    restart: always
